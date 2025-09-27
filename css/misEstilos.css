@@ -1,0 +1,214 @@
+.logo-navbar {
+  max-height: 80px;
+  /* controla la altura */
+  width: auto;
+  /* mantiene proporciones */
+}
+
+.btn-type {
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  border: none;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50px;
+  /* rounded-pill */
+  cursor: pointer;
+}
+
+/* Gradientes por tipo */
+/* Gradientes por tipo + color de texto */
+.btn-todos {
+  background: linear-gradient(45deg, #FFD700, #FFC107);
+  /* dorado suave */
+  color: #000;
+}
+
+.btn-fuego {
+  background: linear-gradient(45deg, #FF5722, #FF9800);
+  color: #fff;
+}
+
+.btn-agua {
+  background: linear-gradient(45deg, #2196F3, #03A9F4);
+  color: #fff;
+}
+
+.btn-planta {
+  background: linear-gradient(45deg, #4CAF50, #8BC34A);
+  color: #fff;
+}
+
+.btn-electrico {
+  background: linear-gradient(45deg, #FFC107, #FFEB3B);
+  color: #000;
+}
+
+.btn-hielo {
+  background: linear-gradient(45deg, #00BCD4, #B2EBF2);
+  color: #000;
+}
+
+.btn-lucha {
+  background: linear-gradient(45deg, #D84315, #FF5722);
+  color: #fff;
+}
+
+/* más claro que antes */
+.btn-veneno {
+  background: linear-gradient(45deg, #9C27B0, #E040FB);
+  color: #fff;
+}
+
+.btn-tierra {
+  background: linear-gradient(45deg, #8D6E63, #BCAAA4);
+  color: #000;
+}
+
+.btn-volador {
+  background: linear-gradient(45deg, #90A4AE, #CFD8DC);
+  color: #000;
+}
+
+.btn-psiquico {
+  background: linear-gradient(45deg, #F06292, #F8BBD0);
+  color: #fff;
+}
+
+.btn-bicho {
+  background: linear-gradient(45deg, #A4C639, #C0D86D);
+  color: #000;
+}
+
+.btn-roca {
+  background: linear-gradient(45deg, #9E9E9E, #BDBDBD);
+  color: #000;
+}
+
+.btn-fantasma {
+  background: linear-gradient(45deg, #5C6BC0, #7986CB);
+  color: #fff;
+}
+
+/* más claro que antes */
+.btn-dragon {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  color: #fff;
+}
+
+.btn-siniestro {
+  background: linear-gradient(45deg, #424242, #616161);
+  color: #fff;
+}
+
+/* texto blanco para contraste */
+.btn-acero {
+  background: linear-gradient(45deg, #B0BEC5, #ECEFF1);
+  color: #000;
+}
+
+.btn-hada {
+  background: linear-gradient(45deg, #F48FB1, #F8BBD0);
+  color: #fff;
+}
+
+
+/* Hover efecto pop y brillo */
+.btn-type:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-type::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(25deg);
+  transition: all 0.7s ease;
+}
+
+.btn-type:hover::after {
+  left: 120%;
+}
+
+/* Seleccionado */
+.btn-check:checked+.btn-type {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 0.3rem rgba(255, 255, 255, 0.6);
+}
+
+
+
+
+body {
+  background-color: #1a1a1a;
+  /* Fondo oscuro */
+}
+
+/* Card grande un poco más chica */
+.pokemon-card-grande {
+  max-width: 400px;
+  /* antes 500px */
+  border-radius: 20px;
+  font-size: 1.1rem;
+  /* antes 1.2rem */
+}
+
+.pokemon-card-grande img {
+  width: 250px;
+  /* antes 300px */
+  height: auto;
+  margin: 0 auto;
+}
+
+
+
+/* Glow animado del input */
+.position-relative {
+  display: inline-block;
+}
+
+#searchPokemon {
+  border: 2px solid #ffc107;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+}
+
+#searchPokemon:focus {
+  border-color: #ff5722;
+  box-shadow: 0 0 20px rgba(255, 87, 34, 0.6);
+  outline: none;
+}
+
+/* Badge animado para "o por tipo" */
+.badge {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.badge:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
+}
+
+.badge-type {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.badge-type:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
