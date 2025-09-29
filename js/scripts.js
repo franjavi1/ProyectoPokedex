@@ -1,6 +1,9 @@
 const pokemonContainer = document.getElementById("pokemonResult"); // contenedor principal
 const loading = document.getElementById("loading");
 const searchInput = document.getElementById("searchPokemon");
+const btnBuscador = document.getElementById("btnBuscar");
+const typeBadge    = document.getElementById("typeBadge");
+let currentType = ""; // "" = Todos
 
 // Mapa de tipos en español -> inglés (para la API)
 const tipoMap = {
@@ -172,10 +175,20 @@ async function buscarPokemon(nombre) {
 
 
 // ===== Buscar al presionar Enter =====
-searchInput.addEventListener("keypress", (e) => {
+/*searchInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
         buscarPokemon(searchInput.value.trim());
     }
+});*/
+searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault(); // evita que el formulario (si lo hubiera) se envíe
+        btnBuscador.click(); // dispara el click del botón
+    }
+});
+
+btnBuscador.addEventListener("click", () => {
+    buscarPokemon(searchInput.value.trim());
 });
 
 // ===== Filtros por tipo =====
@@ -214,30 +227,31 @@ async function mostrarPorTipo(tipo) {
         for (let poke of data.pokemon) {
             const resPoke = await fetch(poke.pokemon.url);
             const dataPoke = await resPoke.json();
+            if(dataPoke.trim().toLowerCase().includes("pika")){
+                const card = `
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mb-3">
+                    <div class="card shadow-lg text-center bg-light h-100" 
+                        style="max-width: 300px; width: 100%; border-radius: 16px;">
+                        <img src="${dataPoke.sprites.other['official-artwork'].front_default}" 
+                            class="card-img-top p-3" alt="${dataPoke.name}" 
+                            style="max-height: 180px; object-fit: contain; margin: 0 auto;">
+                        <div class="card-body">
+                            <h5 class="card-title text-capitalize fw-bold">${dataPoke.name}</h5>
+                            <p class="card-text mb-1">ID: #${dataPoke.id}</p>
+                            <p class="card-text mb-1">Altura: ${dataPoke.height/10} m</p>
+                            <p class="card-text mb-1">Peso: ${dataPoke.weight/10} kg</p>
+                            <div>
+                                ${dataPoke.types.map(t => 
+                                    `<span class="badge bg-primary me-1">${t.type.name}</span>`
+                                ).join("")}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            const card = `
-       <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mb-3">
-    <div class="card shadow-lg text-center bg-light h-100" 
-         style="max-width: 300px; width: 100%; border-radius: 16px;">
-        <img src="${dataPoke.sprites.other['official-artwork'].front_default}" 
-             class="card-img-top p-3" alt="${dataPoke.name}" 
-             style="max-height: 180px; object-fit: contain; margin: 0 auto;">
-        <div class="card-body">
-            <h5 class="card-title text-capitalize fw-bold">${dataPoke.name}</h5>
-            <p class="card-text mb-1">ID: #${dataPoke.id}</p>
-            <p class="card-text mb-1">Altura: ${dataPoke.height/10} m</p>
-            <p class="card-text mb-1">Peso: ${dataPoke.weight/10} kg</p>
-            <div>
-                ${dataPoke.types.map(t => 
-                    `<span class="badge bg-primary me-1">${t.type.name}</span>`
-                ).join("")}
-            </div>
-        </div>
-    </div>
-</div>
-
-            `;
-            row.innerHTML += card;
+                `;
+                row.innerHTML += card;
+            }
         }
 
     } catch (error) {
@@ -259,3 +273,11 @@ async function mostrarPorTipo(tipo) {
         }, retraso);
     }
 }
+
+// seleccionar tipo desde el dropdown
+document.querySelectorAll('.dropdown-menu .dropdown-item').forEach(it => {
+  it.addEventListener('click', () => {
+    currentType = it.dataset.type || "";
+    typeBadge.textContent = it.textContent.trim();
+  });
+});

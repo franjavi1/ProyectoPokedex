@@ -48,24 +48,57 @@
                     placeholder="🔎 Buscar x nombre">
                 <span class="input-glow"></span>
             </div>
-
-            <!-- Texto “o por tipo” como badge -->
-            <span class="badge badge-type fw-bold align-self-center px-3 py-2">
-                🎨 Elegí un tipo
-            </span>
+            
+            <!-- Selector de tipo (dropdown) -->
+            <div class="btn-group">
+                <button id="typeBtn" type="button"
+                        class="btn btn-lg rounded-pill btn-outline-light px-3 dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="me-1">Tipo:</span>
+                    <span id="typeBadge" class="badge rounded-pill bg-warning text-dark">Todos</span>
+                </button>
+                <ul class="dropdown-menu shadow">
+                    <li><button class="dropdown-item" data-type="">⭐ Todos</button></li>
+                    <li><button class="dropdown-item" data-type="fire">🔥 Fuego</button></li>
+                    <li><button class="dropdown-item" data-type="water">💧 Agua</button></li>
+                    <li><button class="dropdown-item" data-type="grass">🌿 Planta</button></li>
+                    <li><button class="dropdown-item" data-type="electric">⚡ Eléctrico</button></li>
+                    <li><button class="dropdown-item" data-type="ice">❄️ Hielo</button></li>
+                    <li><button class="dropdown-item" data-type="fighting">🥊 Lucha</button></li>
+                    <li><button class="dropdown-item" data-type="poison">☠️ Veneno</button></li>
+                    <li><button class="dropdown-item" data-type="ground">🌍 Tierra</button></li>
+                    <li><button class="dropdown-item" data-type="flying">🕊️ Volador</button></li>
+                    <li><button class="dropdown-item" data-type="psychic">🪄 Psíquico</button></li>
+                    <li><button class="dropdown-item" data-type="bug">🐛 Bicho</button></li>
+                    <li><button class="dropdown-item" data-type="rock">🪨 Roca</button></li>
+                    <li><button class="dropdown-item" data-type="ghost">👻 Fantasma</button></li>
+                    <li><button class="dropdown-item" data-type="dragon">🐉 Dragón</button></li>
+                    <li><button class="dropdown-item" data-type="dark">🌑 Siniestro</button></li>
+                    <li><button class="dropdown-item" data-type="steel">⚙️ Acero</button></li>
+                    <li><button class="dropdown-item" data-type="fairy">✨ Hada</button></li>
+                </ul>
+            </div>
+            
+            <div class="position-relative">
+                <button type="button" id="btnBuscar" 
+                        class="btn btn-lg rounded-pill px-4 btn-primary">
+                    🚀 Buscar
+                </button>
+                <span class="input-glow"></span>
+            </div>
         </div>
     </div>
 
-    <!-- Filtros -->
+    <!-- Filtros 
     <div class="container my-3 text-center">
 
-        <div class="d-flex flex-wrap justify-content-center gap-3">
+        <div class="d-flex flex-wrap justify-content-center gap-3"> -->
             <!-- Botón "Todos" -->
-            <input type="radio" class="btn-check" name="tipo" id="todos" autocomplete="off">
-            <label class="btn btn-type btn-todos" for="todos">⭐ Todos</label>
+            <!--<input type="radio" class="btn-check" name="tipo" id="todos" autocomplete="off" checked>
+            <label class="btn btn-type btn-todos" for="todos">⭐ Todos</label>-->
 
             <!-- Tipos -->
-
+            <!--
             <input type="radio" class="btn-check" name="tipo" id="fuego" autocomplete="off">
             <label class="btn btn-type btn-fuego" for="fuego">🔥 Fuego</label>
 
@@ -118,7 +151,7 @@
             <label class="btn btn-type btn-hada" for="hada">✨ Hada</label>
 
         </div>
-    </div>
+    </div> -->
 
     <!-- Resultados -->
     <!-- Spinner de Bootstrap -->
