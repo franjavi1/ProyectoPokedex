@@ -102,7 +102,7 @@ async function mostrarPokemones(cantidad) {
 }
 
 // ===== Función para buscar un Pokémon por nombre =====
-async function buscarPokemon(nombre) {
+/*async function buscarPokemon(nombre) {
     if (!nombre) {
         mostrarPokemones(151);
         return;
@@ -171,7 +171,7 @@ async function buscarPokemon(nombre) {
             mostrarPokemones(151);
         });
     }
-}
+}*/
 
 
 // ===== Buscar al presionar Enter =====
@@ -188,7 +188,10 @@ searchInput.addEventListener("keypress", (e) => {
 });
 
 btnBuscador.addEventListener("click", () => {
-    buscarPokemon(searchInput.value.trim());
+    //buscarPokemon(searchInput.value.trim());
+    mostrarPorTipo(currentType);
+    
+    
 });
 
 // ===== Filtros por tipo =====
@@ -208,6 +211,7 @@ tipoButtons.forEach(btn => {
 // ===== Función para mostrar Pokémon por tipo =====
 async function mostrarPorTipo(tipo) {
     const inicio = Date.now();
+    const nombre = searchInput.value.trim();
     try {
         loading.classList.remove("d-none");
         pokemonContainer.classList.add("d-none");
@@ -221,37 +225,60 @@ async function mostrarPorTipo(tipo) {
         row.innerHTML = "";
 
         const tipoApi = tipoMap[tipo];
-        const res = await fetch(`https://pokeapi.co/api/v2/type/${tipoApi}`);
+        let res;
+        if(currentType=="" || currentType=="Todos"){
+            res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=2000`);
+        }else{
+            res = await fetch(`https://pokeapi.co/api/v2/type/${tipo}`);
+        }
         const data = await res.json();
+        const list = (!currentType || currentType === "Todos")
+        ? (data.results ?? [])
+        : (data.pokemon ?? []).map((p) => p.pokemon);
 
-        for (let poke of data.pokemon) {
-            const resPoke = await fetch(poke.pokemon.url);
+        const filtered = (nombre && nombre.trim() !== "")
+        ? list.filter((poke) => poke.name.toLowerCase().includes(nombre.toLowerCase()))
+        : list;
+        let contPika = 0;
+        for (let poke of filtered) {
+            const resPoke = await fetch(poke.url);
             const dataPoke = await resPoke.json();
-            if(dataPoke.trim().toLowerCase().includes("pika")){
-                const card = `
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mb-3">
-                    <div class="card shadow-lg text-center bg-light h-100" 
-                        style="max-width: 300px; width: 100%; border-radius: 16px;">
-                        <img src="${dataPoke.sprites.other['official-artwork'].front_default}" 
-                            class="card-img-top p-3" alt="${dataPoke.name}" 
-                            style="max-height: 180px; object-fit: contain; margin: 0 auto;">
-                        <div class="card-body">
-                            <h5 class="card-title text-capitalize fw-bold">${dataPoke.name}</h5>
-                            <p class="card-text mb-1">ID: #${dataPoke.id}</p>
-                            <p class="card-text mb-1">Altura: ${dataPoke.height/10} m</p>
-                            <p class="card-text mb-1">Peso: ${dataPoke.weight/10} kg</p>
-                            <div>
-                                ${dataPoke.types.map(t => 
-                                    `<span class="badge bg-primary me-1">${t.type.name}</span>`
-                                ).join("")}
-                            </div>
+            contPika++;
+            const card = `
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mb-3">
+                <div class="card shadow-lg text-center bg-light h-100" 
+                    style="max-width: 300px; width: 100%; border-radius: 16px;">
+                    <img src="${dataPoke.sprites.other['official-artwork'].front_default}" 
+                        class="card-img-top p-3" alt="${dataPoke.name}" 
+                        style="max-height: 180px; object-fit: contain; margin: 0 auto;">
+                    <div class="card-body">
+                        <h5 class="card-title text-capitalize fw-bold">${dataPoke.name}</h5>
+                        <p class="card-text mb-1">ID: #${dataPoke.id}</p>
+                        <p class="card-text mb-1">Altura: ${dataPoke.height/10} m</p>
+                        <p class="card-text mb-1">Peso: ${dataPoke.weight/10} kg</p>
+                        <div>
+                            ${dataPoke.types.map(t => 
+                                `<span class="badge bg-primary me-1">${t.type.name}</span>`
+                            ).join("")}
                         </div>
                     </div>
-                </div>
-
-                `;
-                row.innerHTML += card;
-            }
+                </div>        
+            </div>
+            `;
+            row.innerHTML += card;
+        }
+        if(contPika==0){
+            Swal.fire({
+                icon: 'error',
+                title: '¡Oops!',
+                text: 'Pokémon no encontrado',
+                confirmButtonColor: '#ff5722'
+            }).then(() => {
+                searchInput.value = "";
+                mostrarPokemones(151);
+            });
+        }else{
+            row.innerHTML+=`<button id="btnVolver" class="btn btn-warning mb-4">🔙 Volver a todos</button>`;
         }
 
     } catch (error) {
@@ -270,6 +297,10 @@ async function mostrarPorTipo(tipo) {
         setTimeout(() => {
             loading.classList.add("d-none");
             pokemonContainer.classList.remove("d-none");
+            document.getElementById("btnVolver").addEventListener("click", () => {
+                searchInput.value = "";
+                mostrarPokemones(151);
+            })
         }, retraso);
     }
 }
