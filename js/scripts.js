@@ -193,7 +193,7 @@ tipoButtons.forEach(btn => {
 });
 
 // ===== Función para mostrar Pokémon por tipo =====
-async function mostrarPorTipo(tipo) {
+const mostrarPorTipo = async (tipo) => {
     const inicio = Date.now();
     try {
         loading.classList.remove("d-none");
